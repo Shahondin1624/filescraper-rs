@@ -46,9 +46,9 @@ pub fn copy(args: Arguments, files: Vec<DirEntry>) -> Duration {
     files.par_iter().progress_with(bar).for_each(|entry| {
         let source_path = entry.path();
         let source_path_string = source_path.to_string_lossy().to_string();
-        let source_path_parent = source_path.parent().unwrap();
-        std::fs::create_dir_all(source_path_parent).unwrap();
         let target_path = args.transform_source_to_target_path(source_path);
+        let target_path_parent = target_path.parent().unwrap();
+        std::fs::create_dir_all(target_path_parent).unwrap();
         match std::fs::copy(source_path, target_path) {
             Ok(_) => { debug!("Successfully copied {}", source_path_string) }
             Err(err) => { warn!("Failed to copy {} due to {}", source_path_string, err) }
@@ -89,4 +89,13 @@ pub fn create_progress_bar(items: u64) -> ProgressBar {
         bar.set_style(style);
     }
     bar
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() {
+        let result = 2 + 2;
+        assert_eq!(result, 4);
+    }
 }

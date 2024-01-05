@@ -17,3 +17,4 @@ chrono = "0.4.23"
 atomic-counter = "1.0.1"
 indicatif = { version = "0.17.3", features = ["rayon"] }
 colorful = "0.2.2"
+regex = "1.10.2"
